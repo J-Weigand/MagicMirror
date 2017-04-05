@@ -11,7 +11,8 @@ from PIL import Image, ImageTk
 from contextlib import contextmanager
 
 LOCALE_LOCK = threading.Lock()
-
+# ORIGINAL CODE BY HACKER HOUSE #
+# Modified by Josh Weigand and Clint Chenault #
 ui_locale = '' # e.g. 'fr_FR' fro French, '' as default
 time_format = 12 # 12 or 24
 date_format = "%b %d, %Y" # check python doc for strftime() for options
@@ -289,6 +290,7 @@ class CalendarEvent(Frame):
 class FullscreenWindow:
 
     def __init__(self):
+        f = open("config.txt", "r")
         self.tk = Tk()
         self.tk.configure(background='black')
         self.topFrame = Frame(self.tk, background = 'black')
@@ -299,17 +301,20 @@ class FullscreenWindow:
         self.tk.bind("<Return>", self.toggle_fullscreen)
         self.tk.bind("<Escape>", self.end_fullscreen)
 
-	### CLOCK ###
-        self.clock = Clock(self.topFrame)
-        self.clock.pack(side=RIGHT, anchor=N, padx=100, pady=60)
+        ### CLOCK ###
+        if f.readline().replace("\n","") == "TIME 1":
+            self.clock = Clock(self.topFrame)
+            self.clock.pack(side=RIGHT, anchor=N, padx=100, pady=60)
+
+        ### NEWS ###
+        if f.readline().replace("\n","") == "NEWS 1":
+            self.news = News(self.bottomFrame)
+            self.news.pack(side=LEFT, anchor=S, padx=100, pady=60)
 
 	### WEATHER ###
-        self.weather = Weather(self.topFrame)
-        self.weather.pack(side=LEFT, anchor=N, padx=100, pady=60)
-
-	### NEWS ###
-        self.news = News(self.bottomFrame)
-        self.news.pack(side=LEFT, anchor=S, padx=100, pady=60)
+        if f.readline().replace("\n","") == "WEATHER 1":
+            self.weather = Weather(self.topFrame)
+            self.weather.pack(side=LEFT, anchor=N, padx=100, pady=60)
 
 	### CALENDER ###
         # self.calender = Calendar(self.bottomFrame)
