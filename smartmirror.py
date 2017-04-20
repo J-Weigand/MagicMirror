@@ -26,6 +26,7 @@ xlarge_text_size = 94
 large_text_size = 48
 medium_text_size = 28
 small_text_size = 18
+super_small_text_size = 12
 
 @contextmanager
 def setlocale(name): #thread proof function to work with locale
@@ -110,7 +111,7 @@ class Weather(Frame):
         self.temperatureLbl = Label(self.degreeFrm, font=('Helvetica', xlarge_text_size), fg="white", bg="black")
         self.temperatureLbl.pack(side=LEFT, anchor=N)
         self.iconLbl = Label(self.degreeFrm, bg="black")
-        self.iconLbl.pack(side=LEFT, anchor=N, padx=20)
+        self.iconLbl.pack(side=LEFT, anchor=N, padx=10)
         self.currentlyLbl = Label(self, font=('Helvetica', medium_text_size), fg="white", bg="black")
         self.currentlyLbl.pack(side=TOP, anchor=W)
         self.forecastLbl = Label(self, font=('Helvetica', small_text_size), fg="white", bg="black")
@@ -252,7 +253,7 @@ class NewsHeadline(Frame):
         self.iconLbl.pack(side=LEFT, anchor=N)
 
         self.eventName = event_name
-        self.eventNameLbl = Label(self, text=self.eventName, font=('Helvetica', small_text_size), fg="white", bg="black")
+        self.eventNameLbl = Label(self, text=self.eventName, font=('Helvetica', super_small_text_size), fg="white", bg="black")
         self.eventNameLbl.pack(side=LEFT, anchor=N)
 
 
@@ -290,9 +291,9 @@ class CalendarEvent(Frame):
 class FullscreenWindow:
 
     def __init__(self):
-        f = open("config.txt", "r")
+        f = open("/home/pi/MagicMirror/config.txt", "r")
         self.tk = Tk()
-        self.tk.configure(background='black')
+        self.tk.configure(background='black', cursor='none')
         self.topFrame = Frame(self.tk, background = 'black')
         self.bottomFrame = Frame(self.tk, background = 'black')
         self.topFrame.pack(side = TOP, fill=BOTH, expand = YES)
@@ -308,22 +309,22 @@ class FullscreenWindow:
                global time_format
                time_format = 24
             self.clock = Clock(self.topFrame)
-            self.clock.pack(side=RIGHT, anchor=N, padx=100, pady=60)
+            self.clock.pack(side=RIGHT, anchor=N, padx=0, pady=0)
 
         ### NEWS ###
         if f.readline().replace("\n","") == "NEWS 1":
             self.news = News(self.bottomFrame)
-            self.news.pack(side=LEFT, anchor=S, padx=100, pady=60)
+            self.news.pack(side=LEFT, anchor=S, padx=0, pady=0)
 
-	### WEATHER ###
+	    ### WEATHER ###
         if f.readline().replace("\n","") == "WEATHER 1":
             self.weather = Weather(self.topFrame)
-            self.weather.pack(side=LEFT, anchor=N, padx=100, pady=60)
+            self.weather.pack(side=LEFT, anchor=N, padx=0, pady=0)
 
-	### CALENDER ###
+	    ### CALENDER ###
         if f.readline().replace("\n","") == "CALENDAR 1":
             self.calender = Calendar(self.bottomFrame)
-            self.calender.pack(side = RIGHT, anchor=S, padx=100, pady=60)
+            self.calender.pack(side = RIGHT, anchor=S, padx=0, pady=0)
 
         f.close()
 
