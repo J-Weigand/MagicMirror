@@ -23,9 +23,9 @@ weather_unit = 'us' # see https://darksky.net/dev/docs/forecast for full list of
 latitude = None # Set this if IP location lookup does not work for you (must be a string)
 longitude = None # Set this if IP location lookup does not work for you (must be a string)
 xlarge_text_size = 94
-large_text_size = 48
+large_text_size = 46
 medium_text_size = 28
-small_text_size = 18
+small_text_size = 16
 super_small_text_size = 12
 
 @contextmanager
@@ -111,7 +111,7 @@ class Weather(Frame):
         self.temperatureLbl = Label(self.degreeFrm, font=('Helvetica', xlarge_text_size), fg="white", bg="black")
         self.temperatureLbl.pack(side=LEFT, anchor=N)
         self.iconLbl = Label(self.degreeFrm, bg="black")
-        self.iconLbl.pack(side=LEFT, anchor=N, padx=10)
+        self.iconLbl.pack(side=LEFT, anchor=N, padx=1)
         self.currentlyLbl = Label(self, font=('Helvetica', medium_text_size), fg="white", bg="black")
         self.currentlyLbl.pack(side=TOP, anchor=W)
         self.forecastLbl = Label(self, font=('Helvetica', small_text_size), fg="white", bg="black")
@@ -289,9 +289,8 @@ class CalendarEvent(Frame):
 
 
 class FullscreenWindow:
-
     def __init__(self):
-        f = open("/home/pi/MagicMirror/config.txt", "r")
+        f = open("config.txt", "r")
         self.tk = Tk()
         self.tk.configure(background='black', cursor='none')
         self.topFrame = Frame(self.tk, background = 'black')
@@ -309,24 +308,24 @@ class FullscreenWindow:
                global time_format
                time_format = 24
             self.clock = Clock(self.topFrame)
-            self.clock.pack(side=RIGHT, anchor=N, padx=0, pady=0)
+            self.clock.pack(side=RIGHT, anchor=N, padx=1, pady=1)
 
         ### NEWS ###
         if f.readline().replace("\n","") == "NEWS 1":
             self.news = News(self.bottomFrame)
-            self.news.pack(side=LEFT, anchor=S, padx=0, pady=0)
+            self.news.pack(side=LEFT, anchor=S, padx=1, pady=1)
 
 	    ### WEATHER ###
         if f.readline().replace("\n","") == "WEATHER 1":
             self.weather = Weather(self.topFrame)
-            self.weather.pack(side=LEFT, anchor=N, padx=0, pady=0)
+            self.weather.pack(side=LEFT, anchor=N, padx=1, pady=1)
 
 	    ### CALENDER ###
         if f.readline().replace("\n","") == "CALENDAR 1":
             self.calender = Calendar(self.bottomFrame)
-            self.calender.pack(side = RIGHT, anchor=S, padx=0, pady=0)
-
+            self.calender.pack(side = LEFT, anchor=S, padx=1, pady=1)
         f.close()
+
 
     def toggle_fullscreen(self, event=None):
         self.state = not self.state  # Just toggling the boolean
