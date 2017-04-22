@@ -304,11 +304,16 @@ class FullscreenWindow:
 
         ### CLOCK ###
         if f.readline().replace("\n","") == "TIME 1":
-            if f.readline().replace("\n","") == "FORMAT 24":
-               global time_format
-               time_format = 24
+            #if f.readline().replace("\n","") == "FORMAT 24":
+            #   global time_format
+            #   time_format = 24
             self.clock = Clock(self.topFrame)
             self.clock.pack(side=RIGHT, anchor=N, padx=1, pady=1)
+
+        ### CLOCK FORMAT ###
+        if f.readline().replace("\n","") == "FORMAT 24":
+           global time_format
+           time_format = 24
 
         ### NEWS ###
         if f.readline().replace("\n","") == "NEWS 1":
